@@ -2,6 +2,4 @@ node_modules/
 
 config/config.env
 
-node_blog_doc.txt
-node_blog_dependencies.txt
-note.txt
+notes/
