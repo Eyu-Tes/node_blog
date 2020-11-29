@@ -1,0 +1,10 @@
+
+body {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a, input, button, select, textarea {
+    box-shadow: none !important;
+    outline: none !important;
+}

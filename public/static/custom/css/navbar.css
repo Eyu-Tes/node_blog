@@ -1,0 +1,77 @@
+.navbar {
+    background-color: #5f788a;
+}
+
+.navbar-brand {
+    color: #fff;
+    font-size: 1.75rem !important;
+    padding-right: 50px;
+}
+
+.navbar-brand img {
+    height: 30px;
+}
+
+@media(max-width: 991.98px) {
+    .navbar-brand {
+        font-size: 1.5rem !important;
+        padding-right: 15px;
+    }
+}
+
+@media(max-width: 575.98px) {
+    .navbar-brand {
+        font-size: 1.35rem !important;
+    }
+}
+
+.navbar-brand:hover {
+    color: #fff;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    font-size: 1.25rem;
+}
+
+@media(min-width: 992px) {
+    .navbar-nav .nav-link {
+        margin-right: 20px;
+    }
+}
+
+.navbar-nav:last-of-type {
+    margin-right: 15px;
+}
+
+.navbar-nav .nav-link.active {
+    color: #000;
+    text-decoration: underline;
+    text-underline-position: under
+}
+
+/* nav links except dropdown links and active links */
+.navbar-nav .nav-link:not(.dropdown-toggle):not(.active):hover {
+    color: rgba(243, 223, 73, 1);
+}
+
+.navbar-nav .dropdown-item:focus {
+    background-color: rgba(243, 223, 73, 1);
+}
+
+.navbar .dropdown-menu {
+    border-radius: 0;
+}
+
+/* navbar dropdown with hover effect */
+@media (min-width: 768px) {
+	.navbar .nav-item .dropdown-menu{ display: none; }
+	.navbar .nav-item:hover .dropdown-menu{ display: block; }
+	.navbar .nav-item .dropdown-menu{ margin-top:0; }
+}
+
+.navbar-toggler-icon {
+    /* Must override the default background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); */
+    /* Only change the ---> stroke='rgba(0, 0, 0, 0.5)' to stroke='rgba(255, 255, 255, 1)' */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}

@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-md">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            Node.js Blog
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="dropdown-divider"></div>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link {{#if (urlsEqual path '/')}}active{{/if}}" href="/">home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{#if (urlsEqual path '/about')}}active{{/if}}" href="/about">about</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{#if (urlsEqual path '/contact')}}active{{/if}}" href="/contact">contact</a>
+                </li>
+            </ul>
+            <div class="dropdown-divider"></div>
+            <ul class="navbar-nav">
+                {{#if user}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{user.username}}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="/account">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/account/logout">Logout</a>
+                        </div>
+                    </li>
+                {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link {{#if (urlsEqual path '/account/login')}}active{{/if}}" href="/account/login">
+                            login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{#if (urlsEqual path '/account/register')}}active{{/if}}" href="/account/register">
+                            register
+                        </a>
+                    </li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</nav>

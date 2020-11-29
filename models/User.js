@@ -78,7 +78,7 @@ UserSchema.pre('findOneAndUpdate', async function (next) {
     }
 })
 
-// Delete corresponding blogs whenever a user is deleted (cascading delete)
+// Delete corresponding blogs whenever a user is deleted (cascading delete, 1:m)
 UserSchema.post('findOneAndDelete', async function(doc, next) {
     try {
         await Blog.deleteMany({author: doc._id})
