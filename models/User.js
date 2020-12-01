@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 
 const {imageDelete} = require('../controllers/helpers/image')
-const Blog = require('./Blog')
+const Post = require('./Post')
 
 // email validator (needs to be place before UserSchema definition)
 const validateEmail = (email) => {
@@ -79,10 +79,10 @@ UserSchema.pre('findOneAndUpdate', async function (next) {
     }
 })
 
-// Delete corresponding blogs (cascading delete, 1:m) & image files whenever a user is deleted
+// Delete corresponding posts (cascading delete, 1:m) & image files whenever a user is deleted
 UserSchema.post('findOneAndDelete', async function(doc, next) {
     try {
-        await Blog.deleteMany({author: doc._id})
+        await Post.deleteMany({author: doc._id})
         await imageDelete(doc.avatar)
         next()
     } catch (err) {

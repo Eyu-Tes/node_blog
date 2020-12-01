@@ -29,12 +29,14 @@ const app = express()
 process.env.NODE_ENV === 'development' && app.use(morgan('dev'))
 
 // handlebars helpers
-const {urlsEqual} = require('./controllers/helpers/hbs')
+const {urlsEqual, setChecked, selected} = require('./controllers/helpers/hbs')
 
 // register handlebars as view engine (.hbs extension)
 app.engine('.hbs', exphbs({
     helpers: {
-        urlsEqual
+        urlsEqual, 
+        setChecked, 
+        selected
     },
     extname: '.hbs', 
     // Removes error -> Handlebars: Access has been denied to resolve the property
@@ -80,6 +82,7 @@ app.use((req, res, next) => {
 // load router
 app.use('/', require('./routes/index'))
 app.use('/account', require('./routes/account'))
+app.use('/post', require('./routes/post'))
 
 // set static folders
 app.use(express.static(path.join(__dirname, 'public')))

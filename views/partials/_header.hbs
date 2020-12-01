@@ -22,14 +22,19 @@
             <div class="dropdown-divider"></div>
             <ul class="navbar-nav">
                 {{#if user}}
+                    <li class="nav-item">
+                        <a class="nav-link {{#if (urlsEqual path '/post/add')}}active{{/if}}" href="/post/add">
+                            new post
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             {{user.username}}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="/account">Profile</a>
+                            <a class="dropdown-item" href="/account">profile</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/account/signout">Logout</a>
+                            <a class="dropdown-item" href="/account/signout">logout</a>
                         </div>
                     </li>
                 {{else}}

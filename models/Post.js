@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
 const slug = require('mongoose-slug-updater')
 
-const BlogSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
     title: {
         type: String, 
         required: [true, 'title cannot be empty'], 
-        trim: true
+        trim: true, 
     }, 
     content: {
         type: String, 
-        required: true
+        required: [true, 'content cannot be empty']
     }, 
     categories: [
         {
@@ -46,9 +46,9 @@ const BlogSchema = new mongoose.Schema({
 mongoose.plugin(slug)
 
 // const Category = require('./Category')
-// Delete corresponding categories whenever a blog is deleted
+// Delete corresponding categories whenever a post is deleted
 // cascading delete (in this case removes records with a m:n relation)
-// BlogSchema.post('findOneAndDelete', async function(doc, next) {
+// PostSchema.post('findOneAndDelete', async function(doc, next) {
 //     try {
 //         await Category.deleteMany({_id: {$in: doc.categories}})
 //         next()
@@ -57,4 +57,4 @@ mongoose.plugin(slug)
 //     }
 // })
 
-module.exports = mongoose.model('Blog', BlogSchema)
+module.exports = mongoose.model('Post', PostSchema)
