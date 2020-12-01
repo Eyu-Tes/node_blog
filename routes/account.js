@@ -4,6 +4,8 @@ const multer  = require('multer')
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 
+const {ensureAuth} = require('../middleware/auth')
+
 const {
     showSignupUserPage, 
     signupUser, 
@@ -38,16 +40,16 @@ router.get('/signout', signoutUser)
 
 // @route   /account
 router.route('/')
-.get(showProfilePage)                           // @method    GET
-.post(upload.single('avatar'), updateUser)      // @method    POST
+.get(showProfilePage)                                       // @method    GET
+.post(ensureAuth, upload.single('avatar'), updateUser)      // @method    POST
 
 // @route   POST /account/delete 
-router.post('/delete', deleteUser)        
+router.post('/delete', ensureAuth, deleteUser)        
 
 // @route   /account/password/change
 router.route('/password/change')
-.get(showChangeUserPasswordPage)                // @method  GET
-.post(changePassword)                           // @method  POST
+.get(ensureAuth, showChangeUserPasswordPage)                // @method  GET
+.post(ensureAuth, changePassword)                           // @method  POST
 
 // @route   /account/password/reset
 router.route('/password/forgot')
