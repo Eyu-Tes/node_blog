@@ -1,0 +1,22 @@
+<form action="/account/password/reset/{{token}}" method="POST" novalidate class="form">
+    <h3 class="mb-4 pb-2 border-bottom">Set Your New Password</h3>
+    <div class="form-group">
+        <label for="new_password"><b>New Password</b></label>
+        <input type="password" name="password" id="password" class="form-control form-control-sm" autofocus>
+        {{#if errors.password}}
+        <small class="invalid-feedback d-block">{{errors.password}}</small>
+        {{else}}
+        <small class="text-muted">password must be atleast 6 characters long</small>
+        {{/if}}
+    </div>
+    <div class="form-group">
+        <label for="new_password2"><b>Confirm New Password</b></label>
+        <input type="password" name="password2" id="password2" class="form-control form-control-sm">
+        {{#if errors.password2}}
+        <small class="invalid-feedback d-block">{{errors.password2}}</small>
+        {{else}}
+        <small class="text-muted">enter new password again</small>
+        {{/if}}
+    </div>
+    <input type="submit" value="Save" class="btn btn-block btn-primary mt-4 mb-1">
+</form>

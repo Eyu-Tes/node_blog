@@ -1,0 +1,43 @@
+<form action="/account/signup" method="POST" novalidate class="form">
+    <h3 class="mb-4 pb-2 border-bottom">Join Today</h3>
+    <div class="form-group">
+        <label for="username"><b>Username</b></label>
+        <input type="text" name="username" id="name" value="{{username}}" class="form-control form-control-sm" placeholder="john" autofocus>
+        {{#if errors.username}}
+        <small class="invalid-feedback d-block">{{errors.username}}</small>
+        {{else}}
+        <small class="text-muted">max number of characters allowed is 30</small>
+        {{/if}}
+    </div>
+    <div class="form-group">
+        <label for="email"><b>Email</b></label>
+        <input type="email" name="email" id="email" value="{{email}}" class="form-control form-control-sm" placeholder="example@email.com">
+        {{#if errors.email}}
+        <small class="invalid-feedback d-block">{{errors.email}}</small>
+        {{else}}
+        <small class="text-muted">make sure your email is unique</small>
+        {{/if}}
+    </div>
+    <div class="form-group">
+        <label for="password"><b>Password</b></label>
+        <input type="password" name="password" id="password" class="form-control form-control-sm">
+        {{#if errors.password}}
+        <small class="invalid-feedback d-block">{{errors.password}}</small>
+        {{else}}
+        <small class="text-muted">password must be atleast 6 characters long</small>
+        {{/if}}
+    </div>
+    <div class="form-group">
+        <label for="password2"><b>Confirm Password</b></label>
+        <input type="password" name="password2" id="password2" class="form-control form-control-sm">
+        {{#if errors.password2}}
+        <small class="invalid-feedback d-block">{{errors.password2}}</small>
+        {{else}}
+        <small class="text-muted">enter password again</small>
+        {{/if}}
+    </div>
+    <input type="submit" value="Create Account" class="btn btn-block btn-primary mt-4 mb-1">
+    <small class="text-muted text-primary">
+		Already have an account? <a class="d-inline" href="/account/signin">sign in</a>
+	</small>
+</form>

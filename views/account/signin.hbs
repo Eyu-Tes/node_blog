@@ -1,0 +1,20 @@
+<form action="/account/signin" method="POST" novalidate class="form">
+    <h3 class="mb-4 pb-2 border-bottom">Sign In to Your Account</h3>
+    <div class="form-group">
+        <label for="email"><b>Email</b></label>
+        <input type="email" name="email" id="email" class="form-control form-control-sm" autofocus>
+    </div>
+    <div class="form-group">
+        <label for="password"><b>Password</b></label>
+        <input type="password" name="password" id="password" class="form-control form-control-sm">
+    </div>
+    <input type="submit" value="Log In" class="btn btn-block btn-primary mt-4 mb-1">
+    <div class="d-flex flex-column">
+        <small class="text-muted text-primary">
+		    <a class="d-inline" href="/account/password/forgot">Forgot Password?</a>
+        </small>
+        <small class="text-muted text-primary">
+            Don't have an account? <a class="d-inline" href="/account/signup">sign up</a>
+        </small>
+    </div>
+</form>

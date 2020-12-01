@@ -1,0 +1,42 @@
+{{!-- enctype="multipart/form-data" is used to send files to the server --}}
+<form action="/account" method="POST" enctype="multipart/form-data" novalidate class="form">
+    <div class="media">
+        <img class="border rounded-circle account-img" src="{{avatar}}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ username }}</h2>
+            <p class="text-secondary">{{ email }}</p>
+        </div>
+    </div>
+    <h3 class="mb-4 pb-2 border-bottom">Your Profile Info</h3>
+    <div class="form-group">
+        <label for="username"><b>Username</b></label>
+        <input type="text" name="username" id="name" value="{{username}}" class="form-control form-control-sm" autofocus>
+        {{#if errors.username}}
+        <small class="invalid-feedback d-block">{{errors.username}}</small>
+        {{else}}
+        <small class="text-muted">max number of characters allowed is 30</small>
+        {{/if}}
+    </div>
+    <div class="form-group">
+        <label for="email"><b>Email</b></label>
+        <input type="email" name="email" id="email" value="{{email}}" class="form-control form-control-sm">
+        {{#if errors.email}}
+        <small class="invalid-feedback d-block">{{errors.email}}</small>
+        {{else}}
+        <small class="text-muted">make sure your email is unique</small>
+        {{/if}}
+    </div>
+    <div class="form-group">
+        <label for="image"><b>Image</b></label><br>
+        <input type="file" name="avatar"/>
+    </div>
+    <div class="mt-4 mb-1">
+		<input type="submit" value="Update Account" class="btn btn-sm btn-dark"/>
+		<button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal" data-target="#exampleModal">Delete Account</button>
+	</div>
+    <small class="text-muted text-primary">
+		<a class="d-inline" href="/account/password/change">Change Password</a>
+	</small>
+</form>
+
+{{> _modal }}

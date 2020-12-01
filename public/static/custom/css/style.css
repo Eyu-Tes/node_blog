@@ -8,3 +8,54 @@ a, input, button, select, textarea {
     box-shadow: none !important;
     outline: none !important;
 }
+
+.btn {
+    border-radius: 0;
+}
+
+.btn-primary {
+    background-color: #5f788a;
+    border-color: #5f788a;
+}
+
+.btn-primary:active{
+    background-color: #5f788a !important;
+    border-color: #5f788a !important;
+}
+
+.btn-primary:hover {
+    background-color: #3e4e58;
+    border-color: #3e4e58;
+}
+
+input:not(.btn) {
+    border-color: #5f788a !important;
+}
+
+.alert {
+    border-radius: 0 !important;
+    max-width: 450px;
+}
+
+.form {
+    max-width: 450px;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+input[type=file] {
+    overflow: hidden
+}
+
+.account-img {
+    height: 125px;
+    width: 125px;
+    margin: 0 20px 20px 0;
+}
+
+.account-heading {
+    font-size: 3.5rem;
+}
+

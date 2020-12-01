@@ -1,0 +1,9 @@
+<form action="/account/password/forgot" method="POST" novalidate class="form">
+    <h3 class="mb-4 pb-2 border-bottom">Forgot Your Password?</h3>
+    <div class="form-group">
+        <label for="old_password"><b>Email</b></label>
+        <input type="email" name="email" id="email" value="{{email}}" class="form-control" autofocus>
+        <small class="invalid-feedback d-block">{{errors.email}}</small>
+    </div>
+    <input type="submit" value="Send Email" class="btn btn-block btn-primary mt-4">
+</form>
