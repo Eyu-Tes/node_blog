@@ -120,3 +120,23 @@ module.exports.updatePost = async (req, res) => {
         })
     }
 }
+
+// @desc    delete post
+module.exports.deletePost = async (req, res) => {
+    try {
+        const result = await Post.deleteOne({_id: req.params.id})
+        if(result.deletedCount !== 1) throw ('post not found')
+        req.flash('success_msg', 'you have deleted a post.')
+        res.redirect('/')
+    } catch (err) {
+        // "Invalid id length" error needs to be caught separately, b|c it is throws implicitly
+        if(err.name === 'CastError') {
+            err.message = "Invalid id length"
+            req.flash('failure_msg', err.message)
+            res.redirect('/')
+            return
+        }
+        req.flash('failure_msg', err)
+        res.redirect('/')
+    }
+}
