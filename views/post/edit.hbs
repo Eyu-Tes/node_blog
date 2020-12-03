@@ -1,0 +1,45 @@
+<form action="/post/{{_id}}/edit" method="POST" novalidate class="form">
+    <h3 class="mb-4 pb-2 border-bottom">Update Your Post</h3>
+    <div class="form-group">
+        <label for="title"><b>Title</b></label>
+        <input type="text" name="title" id="title" value="{{title}}" class="form-control form-control-sm" placeholder="My Post" autofocus>
+        <small class="invalid-feedback d-block">{{errors.title}}</small>
+    </div>
+    <div class="form-group dropdown">
+        <label for="categories"><b>Categories</b> <small class="text-muted">(u can choose 0 or more)</small></label>
+        <div class="d-block">
+            {{#each allCategories}}
+            <div class="custom-control custom-checkbox custom-control-inline">
+                {{!-- selected is a custom helper function to check if a checkbox is selected --}}
+                {{!-- use triple curly braces to parse HTML  --}}
+                {{!-- To access the outer 'this' use '../this' --}}
+                <input type="checkbox" id="{{this.name}}" name="categories" 
+                    value={{this._id}} 
+                    {{{selected this._id ../this.selectedCategories}}}
+                    class="custom-control-input">
+                <label class="custom-control-label" for="{{this.name}}">{{this.name}}</label>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="category"><b>Status</b></label>
+        <div class="d-block">
+            {{#each statuses}}
+            <div class="custom-control custom-radio custom-control-inline">
+                {{!-- setChecked is a custom helper function to get the selected option --}}
+                {{!-- use triple curly braces to parse HTML  --}}
+                {{!-- To access the outer 'this' use '../this' --}}
+                <input type="radio" id="{{this}}" name="status" value="{{this}}" {{{setChecked this ../this.status}}} class="custom-control-input">
+                <label class="custom-control-label" for="{{this}}">{{this}}</label>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="content"><b>Content</b></label>
+        <textarea class="form-control" rows=5 id="content" name="content">{{content}}</textarea>
+        <small class="invalid-feedback d-block">{{errors.content}}</small>
+    </div>
+    <input type="submit" value="Publish" class="btn btn-block btn-primary mt-4 mb-1">
+</form>

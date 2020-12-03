@@ -9,7 +9,8 @@ const PostSchema = new mongoose.Schema({
     }, 
     content: {
         type: String, 
-        required: [true, 'content cannot be empty']
+        required: [true, 'content cannot be empty'], 
+        trim: true
     }, 
     categories: [
         {
