@@ -4,9 +4,9 @@
         <img class="border rounded-circle article-img" src="{{ post.author.avatar }}" onerror="this.onerror=null;this.src='/default.png'">
         <div class="media-body mt-2 h5">
             <div class="article-metadata">
-                <a class="mr-4 article-author" href="#"><b>{{ post.author.username }}</b></a>
+                <a class="mr-4 article-author" href="/post/user/{{post.author._id}}"><b>{{ post.author.username }}</b></a>
                 {{!-- moment.js date formatter helper --}}
-                <small class="text-muted">{{ formatDate post.datePublished 'MMM Do YYYY, h:mm:ss a'}}</small>
+                <small class="text-muted">{{ formatDate post.datePublished 'MMM Do YYYY, h:mm a'}}</small>
             </div>
         </div>
         <div class="card-image">

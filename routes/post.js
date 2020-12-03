@@ -8,7 +8,8 @@ const {
     showUpdatePostPage, 
     updatePost, 
     deletePost, 
-    showPostDetail
+    showPostDetail, 
+    showUserPosts
 } = require('../controllers/post')
 
 const router = express.Router()
@@ -28,5 +29,8 @@ router.post('/:id/remove', ensureAuth, deletePost)
 
 // @route   GET /post/:id
 router.get('/:id', showPostDetail)
+
+// @route   GET /post/user/:id
+router.get('/user/:id', showUserPosts)
 
 module.exports = router

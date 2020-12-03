@@ -170,7 +170,8 @@ module.exports.showPostDetail = async (req, res) => {
    
         // if post is private, make sure only the owner access it
         // we need to cast author id to String, inorder to compare with request user
-        if(req.user.id.toString() !== post.author._id.toString() && post.status === 'private') {
+        let userId = req.user ? req.user.id.toString() : ''
+        if(userId !== post.author._id.toString() && post.status === 'private') {
             throw new NotFoundError('you cannot access this post')
         }
 
@@ -186,5 +187,30 @@ module.exports.showPostDetail = async (req, res) => {
             req.flash('failure_msg', err.message)
         }
         res.redirect('/')
+    }
+}
+
+// @desc    show user's posts
+module.exports.showUserPosts = async (req, res) => {
+    try {
+        // only include private posts if current user is the owner of the posts
+        // add the 'public' status filter if current user doesn't own the posts
+        let extraFilters = {}
+        let userId = req.user ? req.user.id.toString() : ''
+        if(userId !== req.params.id) {
+            extraFilters.status = 'public'
+        }
+
+        const userPosts = await Post.find({author: req.params.id, ...extraFilters})
+        .populate('author')
+        .sort({datePublished: 'desc'})
+        .lean()
+        
+        res.render('index', {
+            posts: userPosts
+        })
+    } catch (err) {
+        console.log(err)
+        res.render('index')
     }
 }

@@ -4,7 +4,7 @@
         <img class="border rounded-circle article-img" src="{{ this.author.avatar }}" onerror="this.onerror=null;this.src='/default.png'">
         <div class="media-body">
             <div class="article-metadata">
-                <a class="mr-4 article-author" href="#"><b>{{ this.author.username }}</b></a>
+                <a class="mr-4 article-author" href="/post/user/{{this.author._id}}"><b>{{ this.author.username }}</b></a>
                 {{!-- moment.js date formatter helper --}}
                 <small class="text-muted">{{ formatDate this.datePublished 'MMM D, YYYY'}}</small>
             </div>

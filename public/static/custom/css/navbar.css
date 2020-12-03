@@ -31,12 +31,13 @@
 
 .navbar-nav .nav-link {
     color: #fff;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
 }
 
 @media(min-width: 992px) {
     .navbar-nav .nav-link {
         margin-right: 20px;
+        font-size: 1.25rem;
     }
 }
 

@@ -5,12 +5,16 @@ const moment = require('moment')
 module.exports = {
     // date format
     formatDate: (date, format) =>  moment(date).utc().format(format),
+
     // check if the two URLs are equal
     urlsEqual : (path, href) => (path === href),
+
     // set the selected item in a radio button group in handlebars template
     setChecked: (value, currentValue) => value === currentValue ? "checked" : '', 
+
     // check whether a checkbox is selected
     selected: (value, currentValues=[]) => currentValues.includes(String(value)) && "checked", 
+
     // trim string with characters exceeding the specified length
     truncate: (str, len) => {
         if(str.length > len && str.length > 0) {
@@ -22,5 +26,7 @@ module.exports = {
         }
         return str
     },
+
+    // show edit icon if the logged user is the owner of the post
     showEditIcon: (owner, loggedUser={_id: ''}) => owner._id.toString() === loggedUser._id.toString(),
 }
