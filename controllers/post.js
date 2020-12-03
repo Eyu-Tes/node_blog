@@ -140,3 +140,20 @@ module.exports.deletePost = async (req, res) => {
         res.redirect('/')
     }
 }
+
+// @desc    show public posts
+module.exports.showPublicPosts = async (req, res) => {
+    try {
+        const posts = await Post.find({status: 'public'})
+        .populate('author')
+        .sort({datePublished: 'desc'})
+        .lean()
+
+        res.render('index', {
+            posts
+        })
+    } catch (err) {
+        console.log(err)
+        res.render('index')
+    }
+}

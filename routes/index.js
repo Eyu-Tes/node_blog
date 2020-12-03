@@ -2,14 +2,16 @@ const express = require('express')
 const {
     showHomePage, 
     showAboutPage, 
-    showContactPage
+    showContactPage,
 } = require('../controllers/index')
+
+const { showPublicPosts } = require('../controllers/post')
 
 // initialize router
 const router = express.Router()
 
 // @route   GET /
-router.get('/', showHomePage)
+router.get('/', showPublicPosts)
 
 // @route   GET /about      
 router.get('/about', showAboutPage)

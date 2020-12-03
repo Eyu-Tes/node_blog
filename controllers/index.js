@@ -1,9 +1,3 @@
-
-// @desc    show home page
-module.exports.showHomePage = (req, res) => {
-    res.render('index')
-}
-
 // @desc    show about page
 module.exports.showAboutPage = (req, res) => {
     res.render('pages/about')

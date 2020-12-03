@@ -1,0 +1,42 @@
+ 
+.content-section .card-image {
+    position: relative;
+}
+
+.btn-floating {
+    display: inline-block;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    padding: 0;
+    /* background-color: #26a69a; */
+    border-radius: 50%;
+    -webkit-transition: background-color .3s;
+    transition: background-color .3s;
+    cursor: pointer;
+    vertical-align: middle;
+    font-size: 14px;
+    outline: 0;
+}
+
+.btn-floating i {
+    width: inherit;
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    /* font-size: 1rem; */
+    line-height: 35px;
+}
+
+.btn-floating.halfway-fab {
+    position: absolute;
+    bottom: -42.5px;
+}
+
+.fab1 { right: 60px;}
+
+.fab2 { right: 15px;}

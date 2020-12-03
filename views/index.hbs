@@ -1,5 +1,35 @@
-{{#if user}}
-<h1>Welcome {{user.username}}</h1>
+{{!-- {{#if user}}
+<h2>Welcome {{user.username}}</h2>
 {{else}}
-<h1>Dashboard</h1>
-{{/if}} 
+<h2>Dashboard</h2>
+{{/if}}  --}}
+
+{{#each posts}}
+    <article class="media content-section">
+        {{!-- The reason we have the this.onerror=null in the function is that the browser will be stuck in an endless loop if the onerror image itself generates an error. --}}
+        <img class="border rounded-circle article-img" src="{{ this.author.avatar }}" onerror="this.onerror=null;this.src='/default.png'">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-4 article-author" href="#"><b>{{ this.author.username }}</b></a>
+                <small class="text-muted">{{ formatDate this.datePublished 'MMM D, YYYY'}}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ this.title }}</a></h2>
+            {{!-- truncate is a custom helper function to trim content with character length > 150 --}}
+            {{!-- use triple curly braces to parse HTML  --}}
+            <p class="article-content">{{ truncate this.content 150 }}</p>
+        </div>
+        <div class="card-image">
+            {{!-- use ../user to access user variable that doesn't below to the story obj --}}
+            {{#if (showEditIcon this.author ../user)}}
+                <a href="/post/{{_id}}/edit" class="btn-warning btn-floating halfway-fab fab1">
+                    <i class="fas fa-edit fa-small"></i>
+                </a>
+                <a href="/post/{{_id}}/remove" class="btn-danger btn-floating halfway-fab fab2">
+                    <i class="fas fa-trash fa-small"></i>
+                </a>
+            {{/if}}
+        </div>
+    </article>
+{{else}}
+    <h2>No posts to display!</h2>
+{{/each}}
