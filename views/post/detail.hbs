@@ -1,0 +1,26 @@
+<article class="content-section">
+    <div class="media">
+        {{!-- The reason we have the this.onerror=null in the function is that the browser will be stuck in an endless loop if the onerror image itself generates an error. --}}
+        <img class="border rounded-circle article-img" src="{{ post.author.avatar }}" onerror="this.onerror=null;this.src='/default.png'">
+        <div class="media-body mt-2 h5">
+            <div class="article-metadata">
+                <a class="mr-4 article-author" href="#"><b>{{ post.author.username }}</b></a>
+                {{!-- moment.js date formatter helper --}}
+                <small class="text-muted">{{ formatDate post.datePublished 'MMM Do YYYY, h:mm:ss a'}}</small>
+            </div>
+        </div>
+        <div class="card-image">
+            {{!-- use ../user to access user variable that doesn't below to the story obj --}}
+            {{#if (showEditIcon post.author user)}}
+                <a href="/post/{{post._id}}/edit" class="btn-warning btn-floating halfway-fab far1 fab2" title="update">
+                    <i class="fas fa-edit fa-small"></i>
+                </a>
+                <a href="/post/{{post._id}}/remove" class="btn-danger btn-floating halfway-fab far2 fab2" title="delete">
+                    <i class="fas fa-trash fa-small"></i>
+                </a>
+            {{/if}}
+        </div>
+    </div>
+    <h2 class="article-title">{{ post.title }}</h2>
+    <p class="article-content">{{ post.content }}</p>
+</article>

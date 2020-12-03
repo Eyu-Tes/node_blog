@@ -1,9 +1,3 @@
-{{!-- {{#if user}}
-<h2>Welcome {{user.username}}</h2>
-{{else}}
-<h2>Dashboard</h2>
-{{/if}}  --}}
-
 {{#each posts}}
     <article class="media content-section">
         {{!-- The reason we have the this.onerror=null in the function is that the browser will be stuck in an endless loop if the onerror image itself generates an error. --}}
@@ -11,9 +5,10 @@
         <div class="media-body">
             <div class="article-metadata">
                 <a class="mr-4 article-author" href="#"><b>{{ this.author.username }}</b></a>
+                {{!-- moment.js date formatter helper --}}
                 <small class="text-muted">{{ formatDate this.datePublished 'MMM D, YYYY'}}</small>
             </div>
-            <h2><a class="article-title" href="#">{{ this.title }}</a></h2>
+            <h2><a class="article-title" href="/post/{{this._id}}">{{ this.title }}</a></h2>
             {{!-- truncate is a custom helper function to trim content with character length > 150 --}}
             {{!-- use triple curly braces to parse HTML  --}}
             <p class="article-content">{{ truncate this.content 150 }}</p>
@@ -21,10 +16,10 @@
         <div class="card-image">
             {{!-- use ../user to access user variable that doesn't below to the story obj --}}
             {{#if (showEditIcon this.author ../user)}}
-                <a href="/post/{{_id}}/edit" class="btn-warning btn-floating halfway-fab fab1">
+                <a href="/post/{{_id}}/edit" class="btn-warning btn-floating halfway-fab far1 fab1" title="update">
                     <i class="fas fa-edit fa-small"></i>
                 </a>
-                <a href="/post/{{_id}}/remove" class="btn-danger btn-floating halfway-fab fab2">
+                <a href="/post/{{_id}}/remove" class="btn-danger btn-floating halfway-fab far2 fab1" title="delete">
                     <i class="fas fa-trash fa-small"></i>
                 </a>
             {{/if}}

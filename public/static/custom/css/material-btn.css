@@ -34,9 +34,12 @@
 
 .btn-floating.halfway-fab {
     position: absolute;
-    bottom: -42.5px;
 }
 
-.fab1 { right: 60px;}
+.far1 { right: 60px;}
 
-.fab2 { right: 15px;}
+.far2 { right: 15px;}
+
+.fab1 { bottom: -42.5px; }
+
+.fab2 { bottom: -50px; }

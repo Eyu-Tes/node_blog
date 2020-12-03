@@ -7,7 +7,8 @@ const {
     createPost, 
     showUpdatePostPage, 
     updatePost, 
-    deletePost
+    deletePost, 
+    showPostDetail
 } = require('../controllers/post')
 
 const router = express.Router()
@@ -24,5 +25,8 @@ router.route('/:id/edit')
 
 // @route   POST /post/:id/remove
 router.post('/:id/remove', ensureAuth, deletePost)
+
+// @route   GET /post/:id
+router.get('/:id', showPostDetail)
 
 module.exports = router

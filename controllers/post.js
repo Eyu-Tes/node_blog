@@ -85,7 +85,6 @@ module.exports.updatePost = async (req, res) => {
     // if request body doesn't have the categories attribute, create one and make it empty array
     req.body.categories = selectedCategories || []
     try {
-        req.body.author = id
         const updatedPost = await Post.findOneAndUpdate({_id: id}, req.body, {
             // return the modified document rather than the original
             new: true,
@@ -100,9 +99,10 @@ module.exports.updatePost = async (req, res) => {
         req.flash('success_msg', 'you have updated your post.')
         res.redirect('/')
     } catch (err) {
-        // "Invalid id length" error needs to be caught separately, b|c it is throws implicitly
+        // "Invalid id length" error needs to be caught separately, b|c it is throws implicitly by find methods
         // And "post not found" error is a custom error
         if(err.name === 'CastError' || err.name === 'NotFoundError') {
+            // if CastError, override default message
             if(err.name === 'CastError') err.message = "Invalid id length"
             console.log(`${err.name}: ${err.message}`)
             req.flash('failure_msg', err.message)
@@ -129,7 +129,7 @@ module.exports.deletePost = async (req, res) => {
         req.flash('success_msg', 'you have deleted a post.')
         res.redirect('/')
     } catch (err) {
-        // "Invalid id length" error needs to be caught separately, b|c it is throws implicitly
+        // "Invalid id length" error needs to be caught separately, b|c it is throws implicitly by find methods
         if(err.name === 'CastError') {
             err.message = "Invalid id length"
             req.flash('failure_msg', err.message)
@@ -155,5 +155,36 @@ module.exports.showPublicPosts = async (req, res) => {
     } catch (err) {
         console.log(err)
         res.render('index')
+    }
+}
+
+// @desc    show post detail
+module.exports.showPostDetail = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id)
+        .populate('author')
+        .lean()
+
+        // if post not found throw custom error: "NotFoundError"
+        if(!post) throw new NotFoundError('post not found')
+   
+        // if post is private, make sure only the owner access it
+        // we need to cast author id to String, inorder to compare with request user
+        if(req.user.id.toString() !== post.author._id.toString() && post.status === 'private') {
+            throw new NotFoundError('you cannot access this post')
+        }
+
+        res.render('post/detail', {
+            post
+        })
+    } catch (err) {
+        console.log(err)
+        // "Invalid id length" error needs to be caught separately, b|c it is throws implicitly by find methods
+        if(err.name === 'CastError' || err.name === 'NotFoundError') {
+            if(err.name === 'CastError') err.message = "Invalid post id"
+            console.log(`${err.name}: ${err.message}`)
+            req.flash('failure_msg', err.message)
+        }
+        res.redirect('/')
     }
 }

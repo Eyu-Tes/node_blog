@@ -1,6 +1,5 @@
 const express = require('express')
 const {
-    showHomePage, 
     showAboutPage, 
     showContactPage,
 } = require('../controllers/index')
