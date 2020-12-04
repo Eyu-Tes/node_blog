@@ -2,6 +2,11 @@ const Post = require('../models/Post')
 const Category = require('../models/Category')
 const NotFoundError = require('./helpers/cusomtError')        // custom error message
 
+// forbid access to private resources
+const ensureAuthorized = (user, resource) => {
+
+}
+
 // get all categories
 const getAllCategories = async () => {
     return await 

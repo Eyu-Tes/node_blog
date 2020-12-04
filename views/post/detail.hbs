@@ -22,7 +22,8 @@
         </div>
     </div>
     <h2 class="article-title">{{ post.title }}</h2>
-    <p class="article-content">{{ post.content }}</p>
+    {{!-- render HTML content with triple curley braces --}}
+    <p class="article-content">{{{ post.content }}}</p>
 </article>
 
 {{> _modal }}

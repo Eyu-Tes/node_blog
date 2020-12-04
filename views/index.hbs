@@ -11,7 +11,7 @@
             <h2><a class="article-title" href="/post/{{this._id}}">{{ this.title }}</a></h2>
             {{!-- truncate is a custom helper function to trim content with character length > 150 --}}
             {{!-- use triple curly braces to parse HTML  --}}
-            <p class="article-content">{{ truncate this.content 150 }}</p>
+            <p class="article-content">{{{ truncate this.content 150 }}}</p>
         </div>
         <div class="card-image">
             {{!-- use ../user to access user variable that doesn't below to the story obj --}}
