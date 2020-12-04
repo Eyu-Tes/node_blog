@@ -1,11 +1,12 @@
 const Post = require('../models/Post')
 const Category = require('../models/Category')
-const NotFoundError = require('./helpers/cusomtError')        // custom error message
+const {
+    NotFoundError, 
+    AccessDeniedError
+ } = require('./helpers/cusomtError')        // custom error message
 
-// forbid access to private resources
-const ensureAuthorized = (user, resource) => {
-
-}
+// forbid update & delete access to non owner users
+const ensureAuthorized = (user, post) => (user.id.toString() === post.author._id.toString()) 
 
 // get all categories
 const getAllCategories = async () => {
@@ -52,8 +53,13 @@ module.exports.showUpdatePostPage = async (req, res) => {
     try {
         const allCategories = await getAllCategories()
         const post = await Post.findById(req.params.id).lean()
-        if(!post) throw ('post not found')
         
+        if(!post) throw ('post not found')
+        // if user isn't authorized to manipulate the post, throw: "AccessDeniedError"
+        if(!ensureAuthorized(req.user, post)) {
+            throw new AccessDeniedError('access denied to this post')
+        }
+
         /* ---------- get previously selected categories from category document ---------- */
         let selectedCategories = []
         const targetPost = await Post.findOne({_id: req.params.id})
@@ -70,9 +76,10 @@ module.exports.showUpdatePostPage = async (req, res) => {
         })
     } catch (err) {  
         // "Invalid id length" needs to be caught separately
-        if(err.name === 'CastError') {
+        if(err.name === 'CastError' || err.name === 'AccessDeniedError') {
+            if(err.name === 'CastError') err.message = 'Invalid id length'
             console.log(`${err.name}: ${err.message}`)
-            req.flash('failure_msg', "Invalid id length")
+            req.flash('failure_msg', err.message)
         }
         else {
             req.flash('failure_msg', err)
@@ -90,7 +97,13 @@ module.exports.updatePost = async (req, res) => {
     // if request body doesn't have the categories attribute, create one and make it empty array
     req.body.categories = selectedCategories || []
     try {
-        const updatedPost = await Post.findOneAndUpdate({_id: id}, req.body, {
+        let updatedPost = await Post.findById(id)
+        // if user isn't authorized to manipulate the post, throw: "AccessDeniedError"
+        if(!ensureAuthorized(req.user, updatedPost)) {
+            throw new AccessDeniedError('access denied to this post')
+        }
+
+        updatedPost = await Post.findOneAndUpdate({_id: id}, req.body, {
             // return the modified document rather than the original
             new: true,
             // runs validators 
@@ -106,7 +119,7 @@ module.exports.updatePost = async (req, res) => {
     } catch (err) {
         // "Invalid id length" error needs to be caught separately, b|c it is throws implicitly by find methods
         // And "post not found" error is a custom error
-        if(err.name === 'CastError' || err.name === 'NotFoundError') {
+        if(err.name === 'CastError' || err.name === 'NotFoundError' || err.name == 'AccessDeniedError') {
             // if CastError, override default message
             if(err.name === 'CastError') err.message = "Invalid id length"
             console.log(`${err.name}: ${err.message}`)
@@ -132,9 +145,13 @@ module.exports.showDeletePostModal = async (req, res) => {
         const post = await Post.findOne({_id: req.params.id}).lean()
         // if no posts found, throw custom error: "NotFoundError"
         if(!post) throw new NotFoundError('post not found')
+        // if user isn't authorized to manipulate the post, throw: "AccessDeniedError"
+        if(!ensureAuthorized(req.user, post)) {
+            throw new AccessDeniedError('access denied to this post')
+        }
         res.status(200).json({post})
     } catch (err) {
-        if(err.name === 'CastError' || err.name === 'NotFoundError') {
+        if(err.name === 'CastError' || err.name === 'NotFoundError' || err.name === 'AccessDeniedError') {
             if(err.name === 'CastError') err.message = "Invalid id length"
             console.log(`${err.name}: ${err.message}`)
             res.status(404).json({'msg': err.message})
@@ -145,15 +162,21 @@ module.exports.showDeletePostModal = async (req, res) => {
 
 // @desc    delete post
 module.exports.deletePost = async (req, res) => {
+    const id = req.params.id
     try {
-        const result = await Post.deleteOne({_id: req.params.id})
+        let post = await Post.findById(id)
+        // if user isn't authorized to manipulate the post, throw: "AccessDeniedError"
+        if(!ensureAuthorized(req.user, post)) {
+            throw new AccessDeniedError('access denied to this post')
+        }
+        const result = await Post.deleteOne({_id: id})
         if(result.deletedCount !== 1) throw ('post not found')
         req.flash('success_msg', 'you have deleted a post.')
         res.redirect('/')
     } catch (err) {
         // "Invalid id length" error needs to be caught separately, b|c it is throws implicitly by find methods
-        if(err.name === 'CastError') {
-            err.message = "Invalid id length"
+        if(err.name === 'CastError' || err.name === 'AccessDeniedError') {
+            if(err.name === 'CastError') err.message = "Invalid id length"
             req.flash('failure_msg', err.message)
             res.redirect('/')
             return
