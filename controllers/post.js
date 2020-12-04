@@ -3,7 +3,8 @@ const Category = require('../models/Category')
 const {
     NotFoundError, 
     AccessDeniedError
- } = require('./helpers/cusomtError')        // custom error message
+ } = require('./helpers/cusomtError')        // custom error messages
+const Paginator = require('./helpers/paginatior')   //  paginator class
 
 // forbid update & delete access to non owner users
 const ensureAuthorized = (user, post) => (user.id.toString() === post.author._id.toString()) 
@@ -188,14 +189,25 @@ module.exports.deletePost = async (req, res) => {
 
 // @desc    show public posts
 module.exports.showPublicPosts = async (req, res) => {
+    // destructure req.query with default values for page & limit
+    const { page=1, limit=3 } = req.query
     try {
+        // find posts with pagination applied
         const posts = await Post.find({status: 'public'})
+        .limit(limit * 1)
+        .skip((page-1) * limit)
         .populate('author')
         .sort({datePublished: 'desc'})
         .lean()
 
+        // get the total number of posts that have 'public' status
+        const numberOfPosts = await Post.countDocuments({status: 'public'})
+        const paginator = new Paginator(numberOfPosts, limit)
+        const pageObj = paginator.getPage(page)
+        
         res.render('index', {
-            posts
+            posts, 
+            pageObj
         })
     } catch (err) {
         console.log(err)
@@ -237,6 +249,8 @@ module.exports.showPostDetail = async (req, res) => {
 
 // @desc    show user's posts
 module.exports.showUserPosts = async (req, res) => {
+    // destructure req.query with default values for page & limit
+    const { page=1, limit=3 } = req.query
     try {
         // only include private posts if current user is the owner of the posts
         // add the 'public' status filter if current user doesn't own the posts
@@ -246,13 +260,22 @@ module.exports.showUserPosts = async (req, res) => {
             extraFilters.status = 'public'
         }
 
+        // find posts with pagination applied
         const userPosts = await Post.find({author: req.params.id, ...extraFilters})
+        .limit(limit * 1)
+        .skip((page-1) * limit)
         .populate('author')
         .sort({datePublished: 'desc'})
         .lean()
+
+        // get the total number of posts with the given filters
+        const numberOfPosts = await Post.countDocuments({author: req.params.id, ...extraFilters})
+        const paginator = new Paginator(numberOfPosts, limit)
+        const pageObj = paginator.getPage(page)
         
         res.render('index', {
-            posts: userPosts
+            posts: userPosts, 
+            pageObj
         })
     } catch (err) {
         console.log(err)

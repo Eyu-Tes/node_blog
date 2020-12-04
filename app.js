@@ -29,7 +29,7 @@ const app = express()
 process.env.NODE_ENV === 'development' && app.use(morgan('dev'))
 
 // handlebars helpers
-const {urlsEqual, setChecked, selected, formatDate, truncate, showEditIcon} = require('./controllers/helpers/hbs')
+const {urlsEqual, setChecked, selected, formatDate, truncate, showEditIcon, allEqual} = require('./controllers/helpers/hbs')
 
 // register handlebars as view engine (.hbs extension)
 app.engine('.hbs', exphbs({
@@ -39,7 +39,8 @@ app.engine('.hbs', exphbs({
         selected, 
         formatDate, 
         truncate, 
-        showEditIcon
+        showEditIcon, 
+        allEqual
     },
     extname: '.hbs', 
     // Removes error -> Handlebars: Access has been denied to resolve the property

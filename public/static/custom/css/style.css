@@ -118,5 +118,8 @@ a.article-title:hover {
 }
 
 .sidebar{
+    position: fixed;
+    width: inherit;
+    max-width: inherit;
     background-color: #ffdc6a;
 }

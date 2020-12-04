@@ -1,0 +1,25 @@
+<div class="pagination my-5">
+    {{# if pageObj.hasPrevious }}
+        <li class="page-item"><a href="?page={{pageObj.first}}&limit={{pageObj.limit}}" class="page-link">&laquo; first</a></li>
+        <li class="page-item"><a href="?page={{ pageObj.previousPageNumber }}&limit={{pageObj.limit}}" class="page-link">previous</a></li>
+    {{ else }}
+        <li class="page-item disabled"><a href="" class="page-link">&laquo; first</a></li>
+        <li class="page-item disabled"><a href="" class="page-link">previous</a></li>
+    {{/if}}
+    <li class="page-item">
+        {{# if pageObj.inPageRange }}
+            {{# if (allEqual pageObj.currentFirst pageObj.currentLast pageObj.total)}}
+                <a class="page-link">{{pageObj.total}} of {{pageObj.total}}</a>
+            {{else}}
+                <a class="page-link">{{pageObj.currentFirst}} to {{pageObj.currentLast}} of {{pageObj.total}}</a>
+            {{/if}}
+        {{/if}}
+    </li>
+    {{# if pageObj.hasNext }}
+        <li class="page-item"><a href="?page={{ pageObj.nextPageNumber }}&limit={{pageObj.limit}}" class="page-link">next</a></li>
+        <li class="page-item"><a href="?page={{ pageObj.last }}&limit={{pageObj.limit}}" class="page-link">last &raquo;</a></li>
+    {{ else }}
+        <li class="page-item disabled"><a href="" class="page-link">next</a></li>
+        <li class="page-item disabled"><a href="" class="page-link">last &raquo;</a></li>
+    {{/if}}
+</div>

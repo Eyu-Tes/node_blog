@@ -29,4 +29,7 @@ module.exports = {
 
     // show edit icon if the logged user is the owner of the post
     showEditIcon: (owner, loggedUser={_id: ''}) => owner._id.toString() === loggedUser._id.toString(),
+
+    // compare whether all values are equal
+    allEqual: (v1, v2, v3) => (v1 === v2 && v1 === v3 && v2 === v3)
 }
