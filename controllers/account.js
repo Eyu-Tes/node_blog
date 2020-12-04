@@ -235,7 +235,7 @@ module.exports.showResetPasswordPage = async (req, res) => {
 }
 
 
-// @desc    rest password
+// @desc    reset password
 module.exports.resetPassword = async (req, res) => {
     try {
         let error = {errors: {}}

@@ -121,6 +121,23 @@ module.exports.updatePost = async (req, res) => {
     }
 }
 
+// @desc    show delete post modal
+module.exports.showDeletePostModal = async (req, res) => {
+    try {
+        const post = await Post.findOne({_id: req.params.id}).lean()
+        // if no posts found, throw custom error: "NotFoundError"
+        if(!post) throw new NotFoundError('post not found')
+        res.status(200).json({post})
+    } catch (err) {
+        if(err.name === 'CastError' || err.name === 'NotFoundError') {
+            if(err.name === 'CastError') err.message = "Invalid id length"
+            console.log(`${err.name}: ${err.message}`)
+            res.status(404).json({'msg': err.message})
+            return
+        }
+    }
+}
+
 // @desc    delete post
 module.exports.deletePost = async (req, res) => {
     try {

@@ -7,9 +7,10 @@ const {
     createPost, 
     showUpdatePostPage, 
     updatePost, 
+    showDeletePostModal,
     deletePost, 
     showPostDetail, 
-    showUserPosts
+    showUserPosts, 
 } = require('../controllers/post')
 
 const router = express.Router()
@@ -24,8 +25,10 @@ router.route('/:id/edit')
 .get(ensureAuth, showUpdatePostPage)        // @method  GET
 .post(ensureAuth, updatePost)               // @method  POST
 
-// @route   POST /post/:id/remove
-router.post('/:id/remove', ensureAuth, deletePost)
+// @route   /post/:id/remove
+router.route('/:id/remove')
+.get(ensureAuth, showDeletePostModal)        // @method  GET
+.post(ensureAuth, deletePost)               // @method  POST
 
 // @route   GET /post/:id
 router.get('/:id', showPostDetail)

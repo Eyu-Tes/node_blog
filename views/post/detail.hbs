@@ -1,4 +1,4 @@
-<article class="content-section">
+<article class="section">
     <div class="media">
         {{!-- The reason we have the this.onerror=null in the function is that the browser will be stuck in an endless loop if the onerror image itself generates an error. --}}
         <img class="border rounded-circle article-img" src="{{ post.author.avatar }}" onerror="this.onerror=null;this.src='/default.png'">
@@ -15,7 +15,7 @@
                 <a href="/post/{{post._id}}/edit" class="btn-warning btn-floating halfway-fab far1 fab2" title="update">
                     <i class="fas fa-edit fa-small"></i>
                 </a>
-                <a href="/post/{{post._id}}/remove" class="btn-danger btn-floating halfway-fab far2 fab2" title="delete">
+                <a href="#" class="btn-danger btn-floating halfway-fab far2 fab2" data-toggle="modal" data-target="#exampleModal" title="delete">
                     <i class="fas fa-trash fa-small"></i>
                 </a>
             {{/if}}
@@ -24,3 +24,5 @@
     <h2 class="article-title">{{ post.title }}</h2>
     <p class="article-content">{{ post.content }}</p>
 </article>
+
+{{> _modal }}

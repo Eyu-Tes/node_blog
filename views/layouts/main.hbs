@@ -16,13 +16,21 @@
     {{> _header }}
     <div class="container">
         <div class="row">
-            <div class="col-md-9 col-lg-8 my-3">
+            <div class="col-md-8 my-3">
                 {{> _messages}}
                 {{!-- {{{body}}} is used as placeholder for where main content should be rendered. --}}
                 {{{body}}}
             </div>
-            <div class="col-md-5 col-lg-4 my-3">
-
+            <div class="col-md-4 my-3">
+                <div class="card sidebar rounded-0 border-top-0">
+                    <h3 class="card-header">Featured</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Latest Posts</li>
+                        <li class="list-group-item">Announcements</li>
+                        <li class="list-group-item">Calenders</li>
+                        <li class="list-group-item border-bottom-0">etc</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
